@@ -1,0 +1,11 @@
+.leaflet-container {
+  background-color: rgb(163, 206, 255);
+}
+
+.text-tooltip {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: 14px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
