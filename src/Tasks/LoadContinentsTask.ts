@@ -1,20 +1,70 @@
-import ContinentsData from '../data/continents.json';
+// import ContinentsData from '../data/continents.json';
 import AWSServicesData from '../data/aws_services.json';
+import { Continent } from '../Types/Types';
 
-const { features } = ContinentsData;
+// const { features } = ContinentsData;
+// const { services } = AWSServicesData;
 
 class LoadContinentsTask{
-    setState = null;
-    mapContinents = features;
+    // setContinentsState:React.Dispatch<React.SetStateAction<never[]>>;
+    #mapContinents:Continent[] = [];
+    #continents:Continent[]= [];
 
-    load = (setState: any) => {
-        this.setState = setState;
+    constructor(){
+       this.#fetchContinents();
+    }
 
-        setState(this.mapContinents);
+    #load = async () => {
+        await this.#fetchContinents();
+        this.#processContinentData();
+      };
 
+    #processContinentData = () => {
+        for (let i = 0; i < this.#continents.length; i++) {
+            const continent = this.#continents[i];
+            const mapContinent = continent;
 
-        // this.setState(this.mapContinents);
+            if (mapContinent) {
+                switch (mapContinent.properties.continent) {
+                    case "Africa":
+                        mapContinent.properties.color="#8A2BE2"
+                        break;
+                    case "Asia":
+                        mapContinent.properties.color="#7B68EE"
+                        break;
+                    case "Europe":
+                        mapContinent.properties.color="#6A5ACD"
+                        break;
+                    case "North America":
+                        mapContinent.properties.color="#4B0082"
+                        break;
+                    case "South America":
+                        mapContinent.properties.color="#483D8B"
+                        break;
+                    default:    //Australia
+                        mapContinent.properties.color="#9400D3"
+                        break;
+                }                    
+            }
+            
+            this.#mapContinents.push(mapContinent);
+        }
     };
-}
+
+    getContinents: () => Promise<Continent[]> = async () => {
+        await this.#load();
+        return this.#mapContinents;
+    };
+
+    #fetchContinents = async () => {
+        const response = await fetch(
+        'https://raw.githubusercontent.com/davidamebley/aws-services-status/files/continents.geojson'
+        );
+        const data = await response.json();
+        this.#continents = data.features;
+    };
+
+};
+
 
 export default LoadContinentsTask;

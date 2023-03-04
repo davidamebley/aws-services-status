@@ -45,6 +45,7 @@
     ]
   },
   "devDependencies": {
+    "@types/geojson": "^7946.0.10",
     "@types/react-leaflet": "^3.0.0",
     "nodemon": "^2.0.20"
   }
