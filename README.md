@@ -10,6 +10,7 @@ A service with a status of failure displays a flashing red marker, while an alar
 ## Tech Stack
 * TypeScript
 * ReactJS
+* NPM
 * CSS
 * Leaflet
 * React Leaflet
