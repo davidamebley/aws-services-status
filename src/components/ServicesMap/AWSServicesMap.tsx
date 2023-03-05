@@ -2,26 +2,19 @@ import React, { useEffect, useState } from 'react';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, GeoJSON, Tooltip, CircleMarker } from 'react-leaflet';
 import { Feature,MultiPolygon, Geometry } from 'geojson';
+import L from 'leaflet';
 
 import LoadServiceLocationsTask from '../../Tasks/LoadServiceLocationsTask';
 import { AWSService, Continent } from '../../Types/Types';
 import './AWSServicesMap.css';
+import { Layer } from 'leaflet';
 
-const AWSServicesMap = ({ continents }: any) => {
-  const locations =[ 
-    {
-      name: "ap-northeast-1",
-      coordinates: [35.6761919, 139.6503106],
-    },
-    {
-      name: "eu-west-1",
-      coordinates: [53.41291, -8.24389],
-    },
-    {
-      name: "us-east-1",
-      coordinates: [37.4783967, -76.4530772],
-    },
-  ]
+/* type GeoJSONObject ={
+  type: "FeatureCollection";
+  continents: Continent;
+} */
+
+const AWSServicesMap = ({ continents}: any) => {
   const [awsServices, setAwsServices] = useState<AWSService[]>([])
   const [selectedService, setSelectedService] = useState("License service");
 
@@ -37,12 +30,16 @@ const AWSServicesMap = ({ continents }: any) => {
   useEffect(()=>{
     console.log('Services:', awsServices.map(service => JSON.stringify(service)));
   }, [awsServices]);
+  useEffect(()=>{
+    console.log('Continents log:', continents.map((continent: any) => JSON.stringify(continent)));
+  }, [continents]);
 
   const mapStyle = {
-    fillColor: "white",
+    // fillColor: "white",
     weight: 1,
     color: "black",
-    fillOpacity: 1,
+    fillOpacity: 0.6,
+    className:"continent"
   };
 
   // Define the type of the properties of each continent
@@ -53,35 +50,30 @@ const AWSServicesMap = ({ continents }: any) => {
 
   // Define the type of a continent feature
   type Continent = Feature<MultiPolygon, ContinentProperties>;
+  
 
   // On Each Drawn Continent...
   const onEachContinent = (continent:Continent, layer: any) => {
     // Fill each layer top of continent with color
-    layer.options.fillColor = continent.properties.color;
+    const color = continent.properties.color
+    layer.setStyle({ fillColor: color });
+    // layer.setStyle({ fillColor: 'yellow', weight: 2, fillOpacity: 5 })
 
     const name = continent.properties.continent;
-    // const confirmedText = continent.properties.confirmedText;
+    const service = 
     // Show continent Name, other text, etc, on Each continent in a Popup
     layer.bindPopup(`${name}`);
 
     // Change the fill color on mouse hover
-    /* layer.on({
-      mouseover: (e) => {
-        e.target.setStyle({ fillColor: 'blue' });
+    layer.on({
+      mouseover: (e: L.LeafletMouseEvent) => {
+        // e.target.setStyle({ fillColor: 'blue' });
       },
-      mouseout: (e) => {
-        e.target.setStyle({ fillColor: continent.properties.color });
+      mouseout: (e: L.LeafletMouseEvent) => {
+        // e.target.setStyle({ fillColor: color });
       },
-    }); */
-    /* 
-    Bright Turquoise - #00FFD5
-    Lime Green - #32CD32
-    Yellow - #FFFF00
-    Bright Red - #FF0000
-    Red - #FF6347
-    Warning Yellow - #FFC107
-    */
-
+    });
+    
   };
 
 
@@ -92,7 +84,7 @@ const AWSServicesMap = ({ continents }: any) => {
     >
       <GeoJSON
         style={mapStyle}
-        data={continents} onEachFeature={onEachContinent} />
+        data={continents}  onEachFeature={onEachContinent} />
       {
         (awsServices)
         .filter((awsService =>
@@ -102,14 +94,20 @@ const AWSServicesMap = ({ continents }: any) => {
           awsService.name === selectedService))
           .map((awsService, index) => {
             console.log("Mapping AWS service:", awsService); // add this line to log each AWS service being mapped
-            return  (<CircleMarker
+            return  (
+            <CircleMarker
+            className={`circle-marker service-${awsService.state}`}
               key={index}
               center={[awsService.coordinates![0], awsService.coordinates![1]]}
               color={awsService.color}
               weight={5}
-              radius={10}
+              radius={8}
             >
-              <Tooltip>{awsService.name}</Tooltip>
+              <Tooltip><b>{awsService.name}</b><br/>
+                Region: {awsService.aws_region}<br/>
+                State: <b>{awsService.state}</b><br/>
+                Last updated: <b>{`${new Date(awsService.updated).toLocaleString()}`}</b>
+              </Tooltip>
             </CircleMarker>)
           })
       }

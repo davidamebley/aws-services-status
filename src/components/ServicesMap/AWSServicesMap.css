@@ -1,5 +1,5 @@
 .leaflet-container {
-  background-color: rgb(163, 206, 255);
+  background-color: #1f062a;
 }
 
 .text-tooltip {
@@ -8,4 +8,139 @@
   font-size: 14px;
   padding: 4px 8px;
   border-radius: 4px;
+}
+
+.circle-marker {
+  fill: none;
+  stroke-width: 0.3em;
+}
+
+.service-ok {
+}
+
+.service-ok {
+  transition: stroke-width 0.5s ease-in-out;
+  animation: ServiceOk infinite 7s alternate;
+}
+.service-alarm {
+  transition: stroke-width 0.5s ease-in-out;
+  animation: ServiceAlarm infinite 4s alternate;
+  fill: #ff8800; /* ffcc00 */
+  fill-opacity: 1;
+}
+.service-failure {
+  animation: Pulsate 1s ease-out infinite;
+  -webkit-animation: Pulsate 1s ease-out infinite; /* Required for WebKit-based browsers */
+  -webkit-animation-iteration-count: infinite;
+}
+
+.service-ok:hover,
+.service-alarm:hover {
+  stroke-width: 3%;
+  fill-opacity: 1;
+}
+
+.continent:hover {
+  animation: Elevate ease;
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+  transform: translateY(-2px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: all 0.5s ease-out;
+}
+
+.service-ok:hover {
+  fill: #006633;
+}
+.service-alarm:hover {
+  fill: #ff6600;
+}
+.service-failure:hover {
+  animation: paused;
+  fill-opacity: 1;
+  opacity: 1;
+  fill: red;
+  stroke: white;
+  stroke-width: 0.5em;
+}
+.service-ok:active,
+.service-alarm:active,
+.service-failure:active {
+  border: none;
+}
+
+@keyframes ServiceOk {
+  0% {
+    stroke: #008000;
+  }
+  25% {
+    stroke: #4caf50;
+  }
+  50% {
+    stroke: #66bb6a;
+  }
+  75% {
+    stroke: #81c784;
+  }
+  100% {
+    stroke: #b7f785;
+  }
+}
+@keyframes ServiceAlarm {
+  0% {
+    stroke: #ff6600;
+  }
+  25% {
+    stroke: #ff8800;
+  }
+  50% {
+    stroke: #ffaa00;
+  }
+  75% {
+    stroke: #ffcc00;
+  }
+  100% {
+    stroke: #ffee00;
+  }
+}
+@keyframes Pulsate {
+  0% {
+    opacity: 0.1;
+    stroke-width: 1%;
+  }
+  50% {
+    opacity: 1;
+    stroke-width: 3%;
+  }
+  100% {
+    opacity: 0.1;
+    stroke-width: 1%;
+  }
+}
+@keyframes Elevate {
+  0% {
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  25% {
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    transform: scale(1.001);
+    filter: brightness(1.1);
+  }
+  50% {
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    transform: scale(1.002);
+    filter: brightness(1.25);
+  }
+  75% {
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.003);
+    filter: brightness(1.4);
+  }
+  100% {
+    box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.4);
+    transform: scale(1.004);
+    filter: brightness(1.65);
+  }
 }

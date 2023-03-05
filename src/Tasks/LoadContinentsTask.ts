@@ -58,7 +58,7 @@ class LoadContinentsTask{
 
     #fetchContinents = async () => {
         const response = await fetch(
-        'https://raw.githubusercontent.com/davidamebley/aws-services-status/files/continents.geojson'
+        'https://raw.githubusercontent.com/davidamebley/aws-services-status/files/continents.json'
         );
         const data = await response.json();
         this.#continents = data.features;
