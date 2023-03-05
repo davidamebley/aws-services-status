@@ -3,39 +3,38 @@ import 'leaflet/dist/leaflet.css';
 import { MapContainer, GeoJSON, Tooltip, CircleMarker } from 'react-leaflet';
 import { Feature,MultiPolygon, Geometry } from 'geojson';
 import L from 'leaflet';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 import LoadServiceLocationsTask from '../../Tasks/LoadServiceLocationsTask';
 import { AWSService, Continent } from '../../Types/Types';
 import './AWSServicesMap.css';
-import { Layer } from 'leaflet';
-
-/* type GeoJSONObject ={
-  type: "FeatureCollection";
-  continents: Continent;
-} */
 
 const AWSServicesMap = ({ continents}: any) => {
   const [awsServices, setAwsServices] = useState<AWSService[]>([])
-  const [selectedService, setSelectedService] = useState("License service");
+  const [serviceNames, setServiceNames] = useState([""]);
+  const [selectedService, setSelectedService] = useState("");
 
   useEffect(() => {
     const loadServiceLocations = async () => {
         const loadServiceLocationsTask = new LoadServiceLocationsTask();
         const awsServices = await loadServiceLocationsTask.getAWSServices();
+        // Get Distinct AWS Service Names using the Set object, & convert result to array with the help of the spread operator.
+        const serviceNames = [...new Set(awsServices.map((service) => service.name))];
+        setServiceNames(serviceNames);
+        // Pre-set selected service
+        if (selectedService === "" && serviceNames) {
+          setSelectedService(serviceNames[0]);
+        }else if (!serviceNames?.length)
+          {
+          setSelectedService("No service data to show");
+        }
+
         setAwsServices(awsServices);
     };
     loadServiceLocations();
-  }, []);
-
-  useEffect(()=>{
-    console.log('Services:', awsServices.map(service => JSON.stringify(service)));
-  }, [awsServices]);
-  useEffect(()=>{
-    console.log('Continents log:', continents.map((continent: any) => JSON.stringify(continent)));
-  }, [continents]);
+  }, [selectedService]);
 
   const mapStyle = {
-    // fillColor: "white",
     weight: 1,
     color: "black",
     fillOpacity: 0.6,
@@ -57,29 +56,37 @@ const AWSServicesMap = ({ continents}: any) => {
     // Fill each layer top of continent with color
     const color = continent.properties.color
     layer.setStyle({ fillColor: color });
-    // layer.setStyle({ fillColor: 'yellow', weight: 2, fillOpacity: 5 })
 
     const name = continent.properties.continent;
     const service = 
     // Show continent Name, other text, etc, on Each continent in a Popup
     layer.bindPopup(`${name}`);
-
-    // Change the fill color on mouse hover
-    layer.on({
-      mouseover: (e: L.LeafletMouseEvent) => {
-        // e.target.setStyle({ fillColor: 'blue' });
-      },
-      mouseout: (e: L.LeafletMouseEvent) => {
-        // e.target.setStyle({ fillColor: color });
-      },
-    });
     
   };
 
 
   return (
+    <div className='container__map'>
+      {<Dropdown className='map-dropdown'
+        onSelect={(e) => setSelectedService(e! as string)}>
+        <Dropdown.Toggle variant="primary" id="dropdown-basic">
+          {selectedService}
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+          {serviceNames.map((serviceName, index) => (
+            <Dropdown.Item
+              key={index}
+              eventKey={serviceName}
+            >
+              {serviceName} {/* Drop-down list */}
+            </Dropdown.Item>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>}
+
     <MapContainer
-      style={{ height: '90vh' }} 
+      style={{ height: '100%' }} 
       zoom={2} center={[40, 0]} scrollWheelZoom={true}
     >
       <GeoJSON
@@ -91,7 +98,7 @@ const AWSServicesMap = ({ continents}: any) => {
           awsService.coordinates &&
           awsService.coordinates[0] !== 0 &&
           awsService.coordinates[1] !== 0 &&
-          awsService.name === selectedService))
+          (awsService.name === selectedService)))
           .map((awsService, index) => {
             console.log("Mapping AWS service:", awsService); // add this line to log each AWS service being mapped
             return  (
@@ -112,6 +119,7 @@ const AWSServicesMap = ({ continents}: any) => {
           })
       }
     </MapContainer>
+    </div>
   )
 }
 

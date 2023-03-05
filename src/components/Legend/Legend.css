@@ -1,0 +1,42 @@
+.container__legend {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 10vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+}
+.container__legend ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  text-decoration: none;
+}
+.container__legend ul li {
+  list-style: none;
+  display: flex;
+  flex: 0.1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.container__legend .circle {
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+}
+
+.circle-ok {
+  background-color: rgba(0, 0, 0, 0);
+  border: 0.4em solid #66bb6a;
+}
+.circle-alarm {
+  background-color: #ff6600;
+  border: 0.4em solid #ffff00;
+}
+.circle-failure {
+  background-color: red;
+  border: 0.4em solid white;
+}

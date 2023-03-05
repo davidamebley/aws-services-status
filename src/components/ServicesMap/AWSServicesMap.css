@@ -1,3 +1,17 @@
+.container__map {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 90vh;
+  width: 100vw;
+}
+
+.map-dropdown {
+  position: absolute;
+  top: 0.8em;
+  left: 6.25em;
+  z-index: 999;
+}
 .leaflet-container {
   background-color: #1f062a;
 }
@@ -90,17 +104,20 @@
   0% {
     stroke: #ff6600;
   }
-  25% {
+  20% {
     stroke: #ff8800;
   }
-  50% {
+  40% {
     stroke: #ffaa00;
   }
-  75% {
+  60% {
     stroke: #ffcc00;
   }
-  100% {
+  80% {
     stroke: #ffee00;
+  }
+  100% {
+    stroke: #ffff00;
   }
 }
 @keyframes Pulsate {
