@@ -161,3 +161,12 @@
     filter: brightness(1.7);
   }
 }
+
+@media only screen and (max-width: 600px) {
+  .map-dropdown {
+    position: absolute;
+    top: 0.8em;
+    right: 6.25em;
+    z-index: 999;
+  }
+}
