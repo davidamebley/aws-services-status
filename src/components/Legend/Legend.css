@@ -33,6 +33,9 @@
   text-decoration: none;
   margin-top: 0.5em;
   margin-bottom: 0px;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
 }
 .container__legend ul li {
   list-style: none;
@@ -60,4 +63,22 @@
 .circle-failure {
   background-color: red;
   border: 0.4em solid white;
+}
+
+@media only screen and (max-width: 768px) {
+  h5,
+  h6,
+  .circle {
+    font-size: 0.8em;
+  }
+}
+@media only screen and (max-width: 480px) {
+  h5,
+  h6,
+  .circle {
+    font-size: 0.7em;
+  }
+  .container__legend ul li {
+    flex: 0.2;
+  }
 }
