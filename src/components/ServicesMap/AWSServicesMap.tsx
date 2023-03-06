@@ -85,40 +85,41 @@ const AWSServicesMap = ({ continents}: any) => {
         </Dropdown.Menu>
       </Dropdown>}
 
-    <MapContainer
-      style={{ height: '100%' }} 
-      zoom={2} center={[40, 0]} scrollWheelZoom={true} minZoom={2} maxZoom={3}
-    >
-      <GeoJSON
-        style={mapStyle}
-        data={continents}  onEachFeature={onEachContinent} />
-      {
-        (awsServices)
-        .filter((awsService =>
-          awsService.coordinates &&
-          awsService.coordinates[0] !== 0 &&
-          awsService.coordinates[1] !== 0 &&
-          (awsService.name === selectedService)))
-          .map((awsService, index) => {
-            console.log("Mapping AWS service:", awsService); // add this line to log each AWS service being mapped
-            return  (
-            <CircleMarker
-            className={`circle-marker service-${awsService.state}`}
-              key={index}
-              center={[awsService.coordinates![0], awsService.coordinates![1]]}
-              color={awsService.color}
-              weight={5}
-              radius={8}
-            >
-              <Tooltip><b>{awsService.name}</b><br/>
-                Region: {awsService.aws_region}<br/>
-                State: <b>{awsService.state}</b><br/>
-                Last updated: <b>{`${new Date(awsService.updated).toLocaleString()}`}</b>
-              </Tooltip>
-            </CircleMarker>)
-          })
-      }
-    </MapContainer>
+      <MapContainer
+        className='map-container'
+        // style={{ height: '100%' }} 
+        zoom={2} center={[40, 0]} scrollWheelZoom={true} minZoom={1} maxZoom={3}
+      >
+        <GeoJSON
+          style={mapStyle}
+          data={continents}  onEachFeature={onEachContinent} />
+        {
+          (awsServices)
+          .filter((awsService =>
+            awsService.coordinates &&
+            awsService.coordinates[0] !== 0 &&
+            awsService.coordinates[1] !== 0 &&
+            (awsService.name === selectedService)))
+            .map((awsService, index) => {
+              console.log("Mapping AWS service:", awsService); // add this line to log each AWS service being mapped
+              return  (
+              <CircleMarker
+              className={`circle-marker service-${awsService.state}`}
+                key={index}
+                center={[awsService.coordinates![0], awsService.coordinates![1]]}
+                color={awsService.color}
+                weight={5}
+                radius={8}
+              >
+                <Tooltip><b>{awsService.name}</b><br/>
+                  Region: {awsService.aws_region}<br/>
+                  State: <b>{awsService.state}</b><br/>
+                  Last updated: <b>{`${new Date(awsService.updated).toLocaleString()}`}</b>
+                </Tooltip>
+              </CircleMarker>)
+            })
+        }
+      </MapContainer>
     </div>
   )
 }

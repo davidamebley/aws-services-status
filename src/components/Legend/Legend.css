@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   height: 15vh;
-  width: 100vw;
+  width: 100%;
   background-color: rgba(0, 0, 0, 0.8);
   color: white;
   bottom: 0;
