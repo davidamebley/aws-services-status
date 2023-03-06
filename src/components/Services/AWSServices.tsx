@@ -20,15 +20,15 @@ const AWSServices = () => {
     }
 
   return (
-    <div>
+    <div style={{height:"100%"}}>
         {
             continents.length === 0 ? 
             (<Loading />) : 
             (   
-                <div>
+                <>
                     <AWSServicesMap continents={continents} />
                     <Legend />
-                </div> 
+                </> 
             )
         }
     </div>
