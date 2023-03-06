@@ -87,7 +87,7 @@ const AWSServicesMap = ({ continents}: any) => {
       <MapContainer
         className='map-container'
         // style={{ height: '100%' }} 
-        zoom={2} center={[40, 0]} scrollWheelZoom={true} minZoom={1} maxZoom={3}
+        zoom={2} center={[40, 0]} scrollWheelZoom={true} minZoom={0} maxZoom={3}
       >
         <GeoJSON
           style={mapStyle}
