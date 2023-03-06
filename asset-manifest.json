@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/aws-services-status/static/css/main.f650bcc6.css",
-    "main.js": "/aws-services-status/static/js/main.7a773916.js",
+    "main.css": "/aws-services-status/static/css/main.7ee3f2b7.css",
+    "main.js": "/aws-services-status/static/js/main.d5b230b8.js",
     "static/js/787.e3c8bc5c.chunk.js": "/aws-services-status/static/js/787.e3c8bc5c.chunk.js",
     "index.html": "/aws-services-status/index.html",
-    "main.f650bcc6.css.map": "/aws-services-status/static/css/main.f650bcc6.css.map",
-    "main.7a773916.js.map": "/aws-services-status/static/js/main.7a773916.js.map",
+    "main.7ee3f2b7.css.map": "/aws-services-status/static/css/main.7ee3f2b7.css.map",
+    "main.d5b230b8.js.map": "/aws-services-status/static/js/main.d5b230b8.js.map",
     "787.e3c8bc5c.chunk.js.map": "/aws-services-status/static/js/787.e3c8bc5c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f650bcc6.css",
-    "static/js/main.7a773916.js"
+    "static/css/main.7ee3f2b7.css",
+    "static/js/main.d5b230b8.js"
   ]
 }
