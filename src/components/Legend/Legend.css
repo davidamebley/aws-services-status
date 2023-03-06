@@ -81,4 +81,8 @@
   .container__legend ul li {
     flex: 0.2;
   }
+
+  .container__legend {
+    height: 25vh;
+  }
 }

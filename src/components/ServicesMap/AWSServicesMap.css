@@ -179,4 +179,7 @@
   .map-dropdown {
     width: 100%;
   }
+  .map-container {
+    height: 75vh;
+  }
 }
