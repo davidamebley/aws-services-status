@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, GeoJSON, Tooltip, CircleMarker } from 'react-leaflet';
 import { Feature,MultiPolygon, Geometry } from 'geojson';
-import L from 'leaflet';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 import LoadServiceLocationsTask from '../../Tasks/LoadServiceLocationsTask';
@@ -101,7 +100,6 @@ const AWSServicesMap = ({ continents}: any) => {
             awsService.coordinates[1] !== 0 &&
             (awsService.name === selectedService)))
             .map((awsService, index) => {
-              console.log("Mapping AWS service:", awsService); // add this line to log each AWS service being mapped
               return  (
               <CircleMarker
               className={`circle-marker service-${awsService.state}`}

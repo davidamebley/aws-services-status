@@ -19,8 +19,6 @@ const AWSServices = () => {
         setContinents(continents);
     }
 
-    useEffect(()=>{console.log(`continents: ${continents}`)}, [continents]);
-
   return (
     <div>
         {
