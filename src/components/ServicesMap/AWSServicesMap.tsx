@@ -3,6 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import { MapContainer, GeoJSON, Tooltip, CircleMarker } from 'react-leaflet';
 import { Feature,MultiPolygon } from 'geojson';
 import Dropdown from 'react-bootstrap/Dropdown';
+import Spinner from 'react-bootstrap/Spinner';
 
 import LoadServiceLocationsTask from '../../Tasks/LoadServiceLocationsTask';
 import { AWSService } from '../../Types/Types';
@@ -68,24 +69,36 @@ const AWSServicesMap = ({ continents}: any) => {
       {<Dropdown className='map-dropdown'
         onSelect={(e) => setSelectedService(e! as string)}>
         <Dropdown.Toggle variant="primary" id="dropdown-basic">
-          {selectedService}
+          {serviceNames.length === 0 ? (
+            <Spinner
+              as="span"
+              animation="grow"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />
+          ):(
+            selectedService   /* Default selected item */
+          )}
+          
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
-          {serviceNames.map((serviceName, index) => (
-            <Dropdown.Item
-              key={index}
-              eventKey={serviceName}
-            >
-              {serviceName} {/* Drop-down list */}
-            </Dropdown.Item>
-          ))}
+          {
+            serviceNames.map((serviceName, index) =>(
+              <Dropdown.Item
+                key={index}
+                eventKey={serviceName}
+                >
+                  {serviceName} {/* Drop-down list */}
+              </Dropdown.Item>
+            ))
+          }
         </Dropdown.Menu>
       </Dropdown>}
 
       <MapContainer
         className='map-container'
-        // style={{ height: '100%' }} 
         zoom={2} center={[40, 0]} scrollWheelZoom={true} minZoom={0} maxZoom={3}
       >
         <GeoJSON
