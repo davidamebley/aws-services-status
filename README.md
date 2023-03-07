@@ -1,9 +1,9 @@
 # AWS Services Status
-This frontend web application displays some AWS services and their locations, with their statuses on a World Map.
+This frontend web application displays some AWS services and their locations, with their statuses on a World Map. The AWS services data is stored in an S3 bucket and retrieved via AWS API Gateway.
 
 A service with a status of failure displays a flashing red marker, while an alarm status displays an amber marker. An ok service status is displayed in green.
 
-**LIVE**: The app is live <a href="https://davidamebley.github.io/aws-services-status/">here</a>
+**LIVE**: The app is live **<a href="https://davidamebley.github.io/aws-services-status/">here</a>**
 
 ## Installation
 1. Clone this project on your local machine.
