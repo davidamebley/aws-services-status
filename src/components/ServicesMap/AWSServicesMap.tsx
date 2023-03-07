@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, GeoJSON, Tooltip, CircleMarker } from 'react-leaflet';
-import { Feature,MultiPolygon, Geometry } from 'geojson';
+import { Feature,MultiPolygon } from 'geojson';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 import LoadServiceLocationsTask from '../../Tasks/LoadServiceLocationsTask';
-import { AWSService, Continent } from '../../Types/Types';
+import { AWSService } from '../../Types/Types';
 import './AWSServicesMap.css';
 
 const AWSServicesMap = ({ continents}: any) => {
@@ -16,8 +16,8 @@ const AWSServicesMap = ({ continents}: any) => {
   useEffect(() => {
     const loadServiceLocations = async () => {
         const loadServiceLocationsTask = new LoadServiceLocationsTask();
-        const awsServices = await loadServiceLocationsTask.getAWSServices();
-        // Get Distinct AWS Service Names using the Set object, & convert result to array with the help of the spread operator.
+        const awsServices = await loadServiceLocationsTask.getAWSServicesData();
+        // Get Distinct AWS Service Names using the Set object
         const serviceNames = [...new Set(awsServices.map((service) => service.name))];
         setServiceNames(serviceNames);
         // Pre-set selected service
@@ -57,7 +57,6 @@ const AWSServicesMap = ({ continents}: any) => {
     layer.setStyle({ fillColor: color });
 
     const name = continent.properties.continent;
-    const service = 
     // Show continent Name, other text, etc, on Each continent in a Popup
     layer.bindPopup(`${name}`);
     

@@ -20,7 +20,7 @@ const AWSServices = () => {
     }
 
   return (
-    <div style={{height:"100%"}}>
+    <div className='container__main'>
         {
             continents.length === 0 ? 
             (<Loading />) : 

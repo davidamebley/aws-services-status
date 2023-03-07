@@ -1,12 +1,6 @@
-// import ContinentsData from '../data/continents.json';
-import AWSServicesData from '../data/aws_services.json';
 import { Continent } from '../Types/Types';
 
-// const { features } = ContinentsData;
-// const { services } = AWSServicesData;
-
 class LoadContinentsTask{
-    // setContinentsState:React.Dispatch<React.SetStateAction<never[]>>;
     #mapContinents:Continent[] = [];
     #continents:Continent[]= [];
 

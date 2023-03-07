@@ -1,7 +1,6 @@
-import AWSServicesData from '../data/aws_services.json';
-import { Location, AWSService, ServiceLocation } from '../Types/Types';
+import axios from 'axios';
+import { Location, AWSService } from '../Types/Types';
 
-const { services } = AWSServicesData;
 const locations: Location[] =[ 
     {
       name: "ap-northeast-1",
@@ -15,30 +14,16 @@ const locations: Location[] =[
       name: "us-east-1",
       coordinates: [37.4783967, -76.4530772],
     },
-  ]
+]
 
 class LoadServiceLocationsTask{
-    // #serviceLocations:ServiceLocation|any = {};
-    #awsServices: AWSService[] = [];
-    #locations: Location[];
-    #services:AWSService[] = services;
 
-    constructor(){
-        this.#locations = locations;
-
-        // Load Service Locations
-        this.#load(this.#locations);
-    }
-
-    #load:(locations: Location[])=>void = (locations: Location[]) => {
-        this.#awsServices = this.#processAWSServicesData(locations);
-    };
-
-    #processAWSServicesData:(locations: Location[]) => AWSService[] = (locations:Location[]) => {
+    getAWSServicesData:() => Promise<AWSService[]> = async () => {
         const awsServices:AWSService[] = [];
+        const services:AWSService[] = await JSON.parse(await this.#fetchServicesData());
 
-        for (let i = 0; i < this.#services.length; i++) {
-            const awsService = this.#services[i];
+        for (let i = 0; i < services.length; i++) {
+            const awsService = services[i];
             const serviceLocation = locations.find(
                 (location) => location.name === awsService.aws_region
             );
@@ -69,9 +54,12 @@ class LoadServiceLocationsTask{
         return awsServices;
     };
 
-    getAWSServices = async (): Promise<AWSService[]> => {
-        return this.#awsServices;
+    #fetchServicesData = async () => {
+        const response = await axios.get('https://yze2pu4fmh.execute-api.us-east-1.amazonaws.com/deploy');
+        const data:AWSService[] = response.data
+        return JSON.stringify(data);
     };
+
 
 }
 

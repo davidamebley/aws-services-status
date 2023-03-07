@@ -3,7 +3,7 @@
   flex-direction: column;
   position: relative;
   height: 85%;
-  width: 100vw;
+  width: 100%;
 }
 .map-container {
   height: 100%;
