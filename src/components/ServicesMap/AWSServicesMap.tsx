@@ -11,7 +11,7 @@ import './AWSServicesMap.css';
 
 const AWSServicesMap = ({ continents}: any) => {
   const [awsServices, setAwsServices] = useState<AWSService[]>([])
-  const [serviceNames, setServiceNames] = useState([""]);
+  const [serviceNames, setServiceNames] = useState<string[]>([]);
   const [selectedService, setSelectedService] = useState("");
 
   useEffect(() => {
